@@ -22,11 +22,17 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
-    - name: Restore dependencies
+    - name: Restore dependencies Api
       run: dotnet restore ./RentalCar.Security.API/RentalCar.Security.API.csproj
+
+    - name: Restore dependencies Unit Test
+      run: dotnet restore ./RentalCar.Security.UnitTests/RentalCar.Security.UnitTests.csproj
       
-    - name: Build
+    - name: Build Api
       run: dotnet build ./RentalCar.Security.API/RentalCar.Security.API.csproj --no-restore
       
-    #- name: Test
-     # run: dotnet test --no-build --verbosity normal
+    - name: Build unit Test
+      run: dotnet build ./RentalCar.Security.UnitTests/RentalCar.Security.UnitTests.csproj --no-restore
+      
+    - name: Test
+      run: dotnet test ./RentalCar.Security.UnitTests/RentalCar.Security.UnitTests.csproj --no-build --verbosity normal
