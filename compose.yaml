@@ -1,0 +1,35 @@
+﻿services:
+  security.api:
+    image: rentalcar.security.api
+    build:
+      context: .
+      dockerfile: RentalCar.Security.API/Dockerfile
+    container_name: rentalcar.security
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - "800:8080"
+      - "801:8081"
+    volumes:
+      - appLogs:/var/log
+    depends_on:
+      - security.db
+  
+  security.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    container_name: security.sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Admin2k24@
+    ports:
+      - "1434:1433"
+    volumes:
+      - sqlserver_date:/var/opt/mssql
+
+  
+volumes:
+  appLogs:
+  sqlserver_date:
+      
